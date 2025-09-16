@@ -16,12 +16,16 @@ Una aplicación web interactiva para visualizar y simular el deshielo de glaciar
 
 ## Simulador
 Herramienta interactiva que permite modelar el proceso de deshielo de glaciares bajo diferentes escenarios climáticos. El usuario puede ajustar parámetros como temperatura, radiación solar y corrientes marinas para observar el impacto en el volumen glaciar y la formación de icebergs.
+<img width="1365" height="633" alt="Image" src="https://github.com/user-attachments/assets/88f7ac3c-4ac3-4e49-84c2-94e6beca96de" />
 
 ## Alerta
 Sistema de monitoreo que detecta condiciones críticas en los glaciares y genera alertas automáticas. Las alertas pueden ser visualizadas en el dashboard y enviadas por correo electrónico a los usuarios registrados. Incluye umbrales configurables para temperatura, velocidad de deshielo y eventos extremos.
+<img width="1365" height="642" alt="Image" src="https://github.com/user-attachments/assets/43b9df8e-bf75-4e28-b7b5-52ad6c84d136" />
 
 ## Atlas
-Repositorio geoespacial que integra mapas, inventarios y datos históricos de glaciares e icebergs. Permite explorar capas temáticas, consultar información detallada de cada glaciar y descargar datos en formatos estándar (GeoJSON, Shapefile, Excel).
+Repositorio geoespacial que integra mapas, inventarios y datos históricos de glaciares e icebergs.
+<img width="1364" height="615" alt="Captura de pantalla 2025-06-22 233752" src="https://github.com/user-attachments/assets/c79239b2-65d7-483f-9966-98ea76b39b91" />
+<img width="1324" height="597" alt="Captura de pantalla 2025-06-22 233808" src="https://github.com/user-attachments/assets/06158197-2d7a-4d6e-95a5-8c793486741b" />
 
 ---
 
