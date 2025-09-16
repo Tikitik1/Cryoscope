@@ -1,10 +1,10 @@
 ## Equipo
--Jefe de proyecto: Juan Pablo Cárdenas
--Cientifica de datos: Florencia Castillo
--Desarrollador del simulador: Juan Pablo Cárdenas
--Desarrollador alerta: Florencia Castillo y Carlos Campos
--Desarrollador Atlas: Juan Salcedo y Maximiliano Alvarez
--Desplegamiento del sistema: Juan Salcedo
+- Jefe de proyecto: Juan Pablo Cárdenas
+- Cientifica de datos: Florencia Castillo
+- Desarrollador del simulador: Juan Pablo Cárdenas
+- Desarrollador alerta: Florencia Castillo y Carlos Campos
+- Desarrollador Atlas: Juan Salcedo y Maximiliano Alvarez
+- Desplegamiento del sistema: Juan Salcedo
 
 # Simulador de Deshielo de Glaciares -cryoscope
 
