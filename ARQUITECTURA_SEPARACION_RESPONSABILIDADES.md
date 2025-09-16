@@ -106,5 +106,3 @@
 - ✅ Calcular niveles de riesgo
 - ✅ Mostrar alertas activas
 - ✅ Visualizar datos de múltiples ubicaciones
-
-La arquitectura está bien estructurada y cumple con el principio de separación de responsabilidades.
