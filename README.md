@@ -1,4 +1,4 @@
-# Equipo
+## Equipo
 -Jefe de proyecto: Juan Pablo Cárdenas
 -Cientifica de datos: Florencia Castillo
 -Desarrollador del simulador: Juan Pablo Cárdenas
