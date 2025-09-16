@@ -1,0 +1,279 @@
+/* Estilos para monitoreo tiempo real */
+.monitoreo-container {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e3f2fd;
+}
+
+.header h3 {
+  color: #1565c0;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controles {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-iniciar, .btn-detener {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s;
+}
+
+.btn-iniciar {
+  background: #4caf50;
+  color: white;
+}
+
+.btn-detener {
+  background: #f44336;
+  color: white;
+}
+
+.btn-iniciar:hover, .btn-detener:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.estado-sistema {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.indicador {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.indicador.conectado {
+  color: #4caf50;
+}
+
+.indicador.desconectado {
+  color: #f44336;
+}
+
+.punto-estado {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+.ultima-actualizacion {
+  font-size: 0.8rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.resumen-alertas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.estadistica {
+  text-align: center;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e3f2fd;
+}
+
+.estadistica.alerta {
+  border-color: #ff9800;
+  background: #fff8e1;
+}
+
+.icono-temp, .icono-alerta, .icono-ubicacion, .icono-tiempo {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.valor {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 0.25rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.datos-glaciares {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tarjeta-glaciar {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-left: 4px solid #1976d2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-ubicacion h4 {
+  color: #1565c0;
+  font-size: 0.9rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.info-ubicacion small {
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.parametros-principales {
+  margin: 0.75rem 0;
+}
+
+.temperatura-principal {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.valor-temp {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1976d2;
+}
+
+.rango-temp {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.parametros-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.parametro {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.parametro i {
+  color: #1976d2;
+  width: 16px;
+}
+
+.indicador-riesgo {
+  padding: 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.5rem 0;
+}
+
+.indicador-riesgo.alto {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.indicador-riesgo.medio {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.indicador-riesgo.bajo {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+.indicador-riesgo.normal {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.porcentaje-riesgo {
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.timestamp-datos {
+  text-align: center;
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.sistema-inactivo, .error-conexion {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #e3f2fd;
+}
+
+.mensaje-inactivo h4, .mensaje-error h4 {
+  color: #1565c0;
+  margin-bottom: 0.5rem;
+}
+
+.mensaje-inactivo p, .mensaje-error p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.btn-reintentar {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}

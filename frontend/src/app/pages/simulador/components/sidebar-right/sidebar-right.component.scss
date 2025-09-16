@@ -1,0 +1,921 @@
+.sidebar-right-container {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+
+  h3, h4 {
+    color: #1565c0;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 1.4em;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 8px;
+  }
+
+  h4 {
+    font-size: 1.2em;
+    margin-top: 25px;
+  }
+}
+
+/* Sección de control de capas */
+.control-capas-section {
+  margin-bottom: 30px;
+
+  .layer-controls {
+    margin-top: 12px;
+
+    .layer-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      background: rgba(240, 248, 255, 0.8);
+
+      &.active {
+        background: rgba(33, 150, 243, 0.1);
+        border-color: #2196f3;
+      }
+
+      &:hover {
+        background: rgba(33, 150, 243, 0.15);
+        transform: translateX(4px);
+      }
+
+      .layer-indicator {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);        &.temperatura {
+          background: linear-gradient(45deg, #ff5722, #ff9800, #ffc107);
+        }
+
+        &.icebergs {
+          background: linear-gradient(45deg, #87ceeb, #4682b4, #1e90ff);
+        }
+
+        &.pinturas-rupestres {
+          background: linear-gradient(45deg, #8b4513, #d2691e, #daa520);
+        }        &.dem {
+          background: linear-gradient(45deg, #8b4513, #a0522d, #d2b48c);
+        }
+
+        &.clima {
+          background: linear-gradient(45deg, #00bcd4, #4fc3f7, #81c784);
+        }
+      }
+
+      .layer-name {
+        flex: 1;
+        font-size: 1em;
+        font-weight: 500;
+        color: #1565c0;
+      }
+
+      .layer-toggle {
+        input[type="checkbox"] {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+/* Sección de leyenda del mapa */
+.map-legend-section {
+  margin-bottom: 30px;
+
+  .thermal-layers {
+    margin-bottom: 25px;
+
+    .active-count {
+      font-size: 0.8em;
+      color: #666;
+      font-weight: normal;
+    }
+
+    .layer-list {
+      margin-top: 12px;
+
+      .layer-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+
+        &.active {
+          background: rgba(33, 150, 243, 0.1);
+          border-color: rgba(33, 150, 243, 0.3);
+        }
+
+        &:not(.active) {
+          background: rgba(158, 158, 158, 0.1);
+          opacity: 0.7;
+        }
+
+        &:hover {
+          background: rgba(33, 150, 243, 0.15);
+          transform: translateX(4px);
+        }
+
+        .layer-indicator {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 2px solid white;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .layer-name {
+          flex: 1;
+          font-size: 0.9em;
+          font-weight: 500;
+        }
+
+        .layer-toggle {
+          font-size: 1.2em;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  .climate-symbols {
+    margin-bottom: 25px;
+
+    .symbols-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 12px;
+
+      .symbol-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 6px;
+        border: 1px solid rgba(33, 150, 243, 0.2);
+
+        .symbol-icon {
+          font-size: 1.3em;
+          width: 24px;
+          text-align: center;
+        }
+
+        .symbol-description {
+          flex: 1;
+          font-size: 0.85em;
+          color: #555;
+        }
+      }
+    }
+  }
+
+  .timeline-section {
+    .timeline-placeholder {
+      margin-top: 12px;
+
+      .timeline-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        font-size: 0.9em;
+
+        &.past {
+          background: rgba(96, 125, 139, 0.2);
+          border-left: 4px solid #607d8b;
+        }
+
+        &.current {
+          background: rgba(33, 150, 243, 0.2);
+          border-left: 4px solid #2196f3;
+        }
+
+        &.future {
+          background: rgba(156, 39, 176, 0.2);
+          border-left: 4px solid #9c27b0;
+        }
+
+        .timeline-year {
+          font-weight: 600;
+          color: #1565c0;
+        }
+
+        .timeline-label {
+          color: #666;
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}
+
+/* Sección de icebergs */
+.icebergs-section {
+  .icebergs-summary {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 8px;
+    text-align: center;
+
+    .total-count {
+      font-weight: 600;
+      color: #1565c0;
+      font-size: 0.95em;
+    }
+  }
+
+  .icebergs-list {
+    .iceberg-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba(33, 150, 243, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .iceberg-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .iceberg-name {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .iceberg-icon {
+            font-size: 1.4em;
+          }
+
+          .name-text {
+            font-weight: 600;
+            color: #1565c0;
+            font-size: 1.1em;
+          }
+        }
+
+        .risk-indicator {
+          font-size: 1.5em;
+
+          &.risk-alto {
+            filter: drop-shadow(0 0 4px rgba(244, 67, 54, 0.5));
+          }
+
+          &.risk-medio {
+            filter: drop-shadow(0 0 4px rgba(255, 152, 0, 0.5));
+          }
+
+          &.risk-bajo {
+            filter: drop-shadow(0 0 4px rgba(76, 175, 80, 0.5));
+          }
+        }
+      }
+
+      .iceberg-details {
+        .detail-group {
+          margin-bottom: 12px;
+          padding: 10px;
+          border-radius: 6px;
+
+          &.size-info {
+            background: rgba(33, 150, 243, 0.05);
+          }
+
+          &.location-info {
+            background: rgba(76, 175, 80, 0.05);
+          }
+
+          &.risk-info {
+            background: rgba(255, 152, 0, 0.05);
+          }
+
+          &.ecology-info {
+            background: rgba(156, 39, 176, 0.05);
+          }
+
+          .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            &.coordinates,
+            &.ecology-impact {
+              flex-direction: column;
+              gap: 4px;
+            }
+
+            .detail-label {
+              color: #666;
+              font-weight: 500;
+              flex-shrink: 0;
+            }
+
+            .detail-value {
+              color: #1565c0;
+              font-weight: 600;
+
+              &.risk-text-alto {
+                color: #f44336;
+              }
+
+              &.risk-text-medio {
+                color: #ff9800;
+              }
+
+              &.risk-text-bajo {
+                color: #4caf50;
+              }
+
+              &.ecology-text {
+                color: #7b1fa2;
+                font-weight: normal;
+                font-style: italic;
+              }
+            }
+          }
+        }
+      }
+
+      .risk-progress {
+        margin-top: 12px;
+
+        .progress-bar {
+          width: 100%;
+          height: 6px;
+          background: #e0e0e0;
+          border-radius: 3px;
+          overflow: hidden;
+
+          .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+
+            &.progress-alto {
+              background: linear-gradient(90deg, #ff9800, #f44336);
+            }
+
+            &.progress-medio {
+              background: linear-gradient(90deg, #4caf50, #ff9800);
+            }
+
+            &.progress-bajo {
+              background: linear-gradient(90deg, #2196f3, #4caf50);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Sección de información */
+.informacion-section {
+  margin-bottom: 30px;
+
+  .info-panel {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, #1565c0, #1976d2);
+      color: white;
+
+      h4 {
+        margin: 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: white;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .info-content {
+      padding: 20px;
+    }
+  }
+
+  .temperatura-info {
+    .temp-timeline {
+      .temp-period {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 10px 12px;
+        border-radius: 6px;
+        background: #f8f9fa;
+
+        .period-label {
+          font-weight: 500;
+          color: #555;
+          font-size: 0.9em;
+        }
+
+        .temp-value {
+          font-weight: 700;
+          font-size: 1.1em;
+
+          &.past {
+            color: #2196f3;
+          }
+
+          &.current {
+            color: #4caf50;
+          }
+
+          &.future {
+            color: #ff9800;
+          }
+        }
+      }
+
+      .temp-delta {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        border-left: 4px solid #1565c0;
+
+        .delta-label {
+          font-weight: 600;
+          color: #333;
+          display: block;
+          margin-bottom: 6px;
+        }
+
+        .delta-value {
+          font-size: 1.2em;
+          font-weight: 700;
+
+          &.positive {
+            color: #d32f2f;
+          }
+
+          &.negative {
+            color: #2196f3;
+          }
+        }
+      }
+    }
+  }
+
+  .glaciar-info {
+    .glaciar-details {
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .detail-label {
+          font-weight: 500;
+          color: #666;
+          font-size: 0.9em;
+        }
+
+        .detail-value {
+          font-weight: 600;
+          color: #333;
+          text-align: right;
+          max-width: 60%;
+          word-wrap: break-word;
+        }
+      }
+    }
+
+    .detail-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(240, 248, 255, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #2196f3;
+
+      h5 {
+        margin: 0 0 12px 0;
+        font-size: 1em;
+        font-weight: 600;
+        color: #1565c0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .detail-row {
+        &.highlight {
+          background: rgba(33, 150, 243, 0.1);
+          padding: 8px;
+          border-radius: 4px;
+          margin: 8px 0;
+        }
+
+        .detail-value {
+          &.highlight {
+            font-weight: 600;
+            color: #1565c0;
+          }
+
+          &.temperature {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            
+            &.cold {
+              background-color: #e3f2fd;
+              color: #0d47a1;
+            }
+            
+            &.cool {
+              background-color: #e8f5e8;
+              color: #2e7d32;
+            }
+            
+            &.warm {
+              background-color: #fff3e0;
+              color: #f57c00;
+            }
+          }
+        }
+
+        &.timestamp {
+          margin-top: 15px;
+          padding-top: 12px;
+          border-top: 1px solid #e0e0e0;
+          font-size: 0.9em;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .empty-info {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+
+    .empty-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      opacity: 0.6;
+    }
+
+    p {
+      margin: 0;
+      font-style: italic;
+      line-height: 1.5;
+    }
+  }
+}
+
+/* Información de pinturas rupestres */
+.pintura-rupestre-info {
+    .info-header {
+      background: linear-gradient(135deg, #8b4513, #d2691e);
+    }
+
+    .pintura-details {
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .detail-label {
+          font-weight: 500;
+          color: #666;
+          font-size: 0.9em;
+        }
+
+        .detail-value {
+          font-weight: 600;
+          color: #333;
+          text-align: right;
+          max-width: 60%;
+          word-wrap: break-word;
+
+          &.highlight {
+            color: #d2691e;
+            font-weight: 700;
+          }
+        }
+
+        &.timestamp {
+          margin-top: 15px;
+          padding-top: 15px;
+          border-top: 1px solid #e0e0e0;
+          font-size: 0.85em;
+          color: #999;
+        }
+      }
+
+      .detail-section {
+        margin-bottom: 20px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        h5 {
+          color: #d2691e;
+          font-size: 0.95em;
+          font-weight: 600;
+          margin-bottom: 12px;
+          padding-bottom: 6px;
+          border-bottom: 2px solid #f0f0f0;
+        }
+      }
+    }
+  }
+
+/* Estados de carga, error y vacío */
+.loading-state,
+.error-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+  color: #666;
+}
+
+.loading-state {
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(33, 150, 243, 0.3);
+    border-top-color: #2196f3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+}
+
+.error-state {
+  color: #f44336;
+
+  .error-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+  }
+
+  .reload-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+
+    &:hover {
+      background: #d32f2f;
+    }
+  }
+}
+
+.empty-state {
+  .empty-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+
+  h4 {
+    color: #999;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #bbb;
+    font-size: 0.9em;
+  }
+}
+
+/* Animaciones */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Entrada de tarjetas de icebergs */
+.iceberg-card {
+  animation: slideInRight 0.4s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Estilos para popup de clima */
+.clima-popup {
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 280px;
+  
+  h4 {
+    margin: 0 0 12px 0;
+    color: #00bcd4;
+    font-size: 1.1em;
+    border-bottom: 2px solid #e0f7fa;
+    padding-bottom: 6px;
+  }
+  
+  .clima-datos {
+    p {
+      margin: 6px 0;
+      font-size: 0.9em;
+      line-height: 1.4;
+      color: #333;
+      
+      strong {
+        color: #00695c;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* Estilos mejorados para información de clima */
+.clima-info {
+  .detail-section.destacado {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+
+    h5 {
+      color: #1976d2;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .detail-row.principal {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      border-left: 4px solid #1976d2;
+
+      .detail-label {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .detail-value.destacado {
+        font-weight: 700;
+        font-size: 1.1em;
+        color: #1976d2;
+      }
+    }
+  }
+
+  .detail-section {
+    h5 {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #f5f5f5;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .detail-label {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .detail-value {
+        font-weight: 500;
+        color: #333;
+
+        &.highlight {
+          color: #ff6b35;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar-right-container {
+    padding: 15px;
+
+    .iceberg-card {
+      padding: 12px;
+
+      .iceberg-header {
+        .iceberg-name .name-text {
+          font-size: 1em;
+        }
+
+        .risk-indicator {
+          font-size: 1.3em;
+        }
+      }
+    }
+
+    .symbols-grid {
+      .symbol-item {
+        .symbol-description {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}

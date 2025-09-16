@@ -1,0 +1,880 @@
+.simulador-deshielo {
+  width: 100%;
+  height: auto; // Altura automática para mostrar todo el contenido
+  background: rgba(255, 255, 255, 0.95);
+  overflow: visible; // Sin scroll interno
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: block;.simulador-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+    color: white;
+    border-bottom: 2px solid #e3f2fd;
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0;
+      font-size: 1.4em;
+      font-weight: 600;
+    }
+  }  .simulador-content {
+    padding: 0 12px 20px 12px;
+  }  .glaciar-info {
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      background: rgba(33, 150, 243, 0.1);
+      border-color: #2196f3;
+    }
+
+    h4 {
+      margin: 0 0 10px 0;
+      color: #1565c0;
+      font-size: 1.1em;
+      font-weight: 600;
+      word-wrap: break-word;
+    }        .info-grid {
+        display: grid;
+        gap: 6px;
+        width: 100%;
+
+        .info-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 4px 0;
+          border-bottom: 1px solid #f5f5f5;
+          align-items: flex-start;
+          gap: 8px;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .label {
+            color: #666;
+            font-size: 0.85em;
+            flex: 1 1 40%;
+            min-width: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+          }
+
+          .value {
+            font-weight: 600;
+            color: #333;
+            flex: 1 1 60%;
+            text-align: right;
+            min-width: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-size: 0.85em;
+          }
+        }
+      }
+  }  .parametros-simulacion {
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      background: rgba(33, 150, 243, 0.1);
+      border-color: #2196f3;
+    }
+
+    h5 {
+      margin: 0 0 12px 0;
+      color: #1565c0;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+      position: relative;
+      width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 4px;
+        color: #555;
+        font-size: 0.85em;
+        font-weight: 500;
+        word-wrap: break-word;
+      }        .form-input {
+          width: 100%;
+          padding: 8px 10px;
+          border: 2px solid #e0e0e0;
+          border-radius: 6px;
+          font-size: 0.85em;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          box-sizing: border-box;
+          min-width: 0;
+          word-wrap: break-word;&:focus {
+          outline: none;
+          border-color: #1565c0;
+          box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        &.modified {
+          border-color: #ff9800;
+          background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        &.readonly {
+          background-color: #f8f9fa;
+          color: #6c757d;
+          cursor: not-allowed;
+        }
+
+        &.error {
+          border-color: #dc3545;
+        }
+      }      .unit {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 0.75em;
+        pointer-events: none;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.75em;
+        margin-top: 3px;
+      }
+
+      .help-text {
+        color: #666;
+        font-size: 0.7em;
+        margin-top: 3px;
+        font-style: italic;
+        line-height: 1.3;
+      }
+    }
+  }
+  .acciones {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+
+    .btn-simular,
+    .btn-reset {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-sizing: border-box;
+    }.btn-simular {
+      background: linear-gradient(135deg, #1565c0 0%, #2196f3 100%);
+      color: white;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+      }
+    }
+
+    .btn-reset {
+      background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+      color: white;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+      }
+    }
+  }  .resultados {
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      background: rgba(33, 150, 243, 0.1);
+      border-color: #2196f3;
+    }    h5 {
+      margin: 0 0 12px 0;
+      color: #1565c0;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+
+    .resultado-principal {
+      &.critico {
+        border: 2px solid #dc3545;
+        border-radius: 6px;
+        padding: 10px;
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+      }
+
+      .resultado-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid #f5f5f5;
+        align-items: flex-start;
+        gap: 8px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .label {
+          color: #666;
+          font-size: 0.85em;
+          flex: 1 1 50%;
+          min-width: 0;
+          word-wrap: break-word;
+        }
+
+        .value {
+          font-weight: 600;
+          color: #333;
+          flex: 1 1 50%;
+          text-align: right;
+          min-width: 0;
+          word-wrap: break-word;
+          font-size: 0.85em;
+        }
+      }      .resultado-critico {
+        text-align: center;
+        margin-bottom: 12px;
+
+        h6 {
+          color: #dc3545;
+          margin: 0 0 6px 0;
+          font-size: 1em;
+        }
+
+        p {
+          color: #721c24;
+          margin: 0;
+          font-size: 0.85em;
+          line-height: 1.3;
+        }
+      }
+    }
+  }  .mapa-simulacion {
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      background: rgba(33, 150, 243, 0.1);
+      border-color: #2196f3;
+    }
+
+    h5 {
+      margin: 0 0 10px 0;
+      color: #1565c0;
+      font-size: 1.05em;
+      font-weight: 600;
+    }    .mapa-container {
+      width: 100%;
+      height: 280px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      position: relative;
+      z-index: 1;
+      
+      // Asegurar que Leaflet funcione correctamente
+      :global(.leaflet-container) {
+        height: 100% !important;
+        width: 100% !important;
+      }
+    }
+  }  .explicacion {
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      background: rgba(33, 150, 243, 0.1);
+      border-color: #2196f3;
+    }
+
+    h5 {
+      margin: 0 0 10px 0;
+      color: #1565c0;
+      font-size: 1.05em;
+      font-weight: 600;
+    }    .texto-explicativo {
+      font-size: 0.8em;
+      line-height: 1.4;
+      color: #444;
+      white-space: pre-line;
+      max-height: none;
+      overflow: visible;
+      padding-right: 6px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(33, 150, 243, 0.5);
+        border-radius: 2px;
+
+        &:hover {
+          background: rgba(33, 150, 243, 0.7);
+        }
+      }
+    }
+  }
+  .sin-glaciar {
+    height: auto; // Altura automática
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+
+    .placeholder {
+      text-align: center;
+      color: #6c757d;
+
+      h4 {
+        margin: 0 0 12px 0;
+        color: #495057;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .loading-indicator,
+  .loading-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    background: rgba(240, 248, 255, 0.8);
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    p {
+      margin: 15px 0 0 0;
+      color: #1565c0;
+      font-weight: 500;
+    }
+
+    small {
+      margin: 10px 0 0 0;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e3f2fd;
+      border-top: 4px solid #1565c0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .simulador-deshielo {
+    width: 100vw;
+    left: -100vw;
+
+    &.visible {
+      left: 0;
+    }
+  }
+}
+
+// Estilos para la forma real del glaciar en el mapa
+.glaciar-shape {
+  stroke: #2196F3 !important;
+  stroke-width: 3px !important;
+  fill: #E3F2FD !important;
+  fill-opacity: 0.7 !important;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    stroke: #1976D2 !important;
+    stroke-width: 4px !important;
+    fill: #BBDEFB !important;
+    fill-opacity: 0.9 !important;
+  }
+}
+
+/* Estilos para área de impacto en el mapa */
+:host ::ng-deep .area-impacto {
+  stroke-dasharray: 10, 5;
+  stroke-width: 3px;
+  animation: pulseImpact 2s infinite ease-in-out;
+}
+
+@keyframes pulseImpact {
+  0%, 100% {
+    stroke-opacity: 0.8;
+    fill-opacity: 0.3;
+  }
+  50% {
+    stroke-opacity: 1;
+    fill-opacity: 0.5;
+  }
+}
+
+/* Estilos para popups de impacto */
+:host ::ng-deep .impacto-popup-container {
+  .leaflet-popup-content {
+    margin: 12px 16px;
+    min-width: 300px;
+  }
+  
+  .impacto-popup {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    
+    strong {
+      color: #1565c0;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+      border-bottom: 1px solid #e3f2fd;
+      padding-bottom: 4px;
+    }
+    
+    .popup-footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid #e0e0e0;
+      
+      small {
+        color: #666;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+/* Estilos para popup del glaciar */
+:host ::ng-deep .glaciar-popup-container {
+  .leaflet-popup-content {
+    margin: 12px 16px;
+    min-width: 280px;
+  }
+  
+  .glaciar-popup {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    
+    strong {
+      color: #0277bd;
+      display: block;
+      margin-bottom: 6px;
+      
+      &:first-child {
+        font-size: 1.1em;
+        border-bottom: 1px solid #e1f5fe;
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+      }
+    }
+    
+    .popup-footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #e0f2f1;
+      
+      small {
+        color: #546e7a;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.debug-info {
+    background: #fff3e0 !important;
+    border: 1px solid #ffcc02;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.8em;
+    
+    ul {
+      margin: 5px 0;
+      padding-left: 20px;
+    }
+  }
+  
+  .recomendaciones {
+    background: rgba(76, 175, 80, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #c8e6c9;
+    margin-top: 16px;
+    
+    h6 {
+      color: #2e7d32;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      font-size: 1em;
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: 16px;
+      
+      li {
+        color: #555;
+        margin-bottom: 6px;
+        line-height: 1.4;
+        font-size: 0.9em;
+        word-wrap: break-word;
+      }
+    }
+  }
+
+  // Animación para elementos críticos
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Mejoras para el mapa
+.mapa-simulacion {
+  margin-top: 20px;
+  
+  .mapa-help {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+  }
+}
+
+// Estilos responsivos - COMENTADO - Usando nueva implementación con impactos-grid
+/*
+@media (max-width: 768px) {
+  .impactos-resumen {
+    gap: 8px;
+    
+    .impacto-card {
+      padding: 10px;
+      
+      .card-header {
+        gap: 6px;
+        
+        .icon {
+          font-size: 1.1em;
+        }
+        
+        h6 {
+          font-size: 0.95em;
+        }
+      }
+      
+      p {
+        font-size: 0.85em;
+        line-height: 1.3;
+      }
+      
+      .indicador-completado {
+        font-size: 0.75em;
+        padding: 2px 5px;
+      }
+    }
+  }
+  
+  .metodologia-analisis {
+    padding: 10px;
+    
+    h6 {
+      font-size: 0.95em;
+    }
+    
+    ul li {
+      font-size: 0.8em;
+    }
+  }
+  
+  .glaciar-popup {
+    font-size: 0.9em;
+  }
+  
+  .analisis-impactos {
+    padding: 12px;
+    margin-top: 12px;
+    
+    h5 {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Estilos específicos para sidebar muy estrecho - COMENTADO - Usando nueva implementación
+/*
+@media (max-width: 400px) {
+  .impactos-resumen {
+    .impacto-card {
+      padding: 8px;
+      
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        
+        .icon {
+          align-self: flex-start;
+        }
+      }
+      
+      p {
+        font-size: 0.8em;
+        margin-bottom: 6px;
+      }
+    }
+  }
+  
+  .metodologia-analisis {
+    h6 {
+      font-size: 0.9em;
+    }
+    
+    ul {
+      padding-left: 12px;
+      
+      li {
+        font-size: 0.75em;
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+
+/* Grid de impactos con cuadrados de colores */
+.impactos-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.impacto-card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  
+  &:hover {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    
+    .nivel-indicator {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 2px solid white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      
+      &.nivel-bajo {
+        background: linear-gradient(135deg, #4caf50, #66bb6a);
+      }
+      
+      &.nivel-medio {
+        background: linear-gradient(135deg, #ff9800, #ffb74d);
+      }
+      
+      &.nivel-alto {
+        background: linear-gradient(135deg, #f44336, #ef5350);
+      }
+      
+      &.nivel-critico {
+        background: linear-gradient(135deg, #d32f2f, #c62828);
+        animation: pulseAlert 2s infinite ease-in-out;
+      }
+    }    
+    .icon {
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+    
+    h6 {
+      margin: 0;
+      flex: 1;
+      color: #1565c0;
+      font-weight: 600;
+      font-size: 1em;
+      min-width: 0;
+      word-break: break-word;
+      line-height: 1.3;
+    }
+    
+    .nivel-badge {
+      background: rgba(21, 101, 192, 0.1);
+      color: #1565c0;
+      padding: 3px 6px;
+      border-radius: 5px;
+      font-size: 0.75em;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+  }    p {
+    margin: 0 0 10px 0;
+    color: #555;
+    line-height: 1.4;
+    font-size: 0.85em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .detalles {
+    margin-bottom: 6px;
+    color: #666;
+    font-size: 0.8em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+    
+    strong {
+      color: #1565c0;
+      font-weight: 600;
+    }
+  }
+  
+  .ciudades-cercanas {
+    margin-top: 8px;
+    
+    .ciudad-mini {
+      background: rgba(240, 248, 255, 0.8);
+      padding: 4px 8px;
+      margin: 3px 0;
+      border-radius: 5px;
+      font-size: 0.8em;
+      border-left: 3px solid #2196f3;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.3;
+    }
+  }
+  
+  // Estilos específicos por nivel de impacto
+  &.nivel-bajo {
+    border-color: #4caf50;
+    
+    .card-header .nivel-badge {
+      background: rgba(76, 175, 80, 0.1);
+      color: #2e7d32;
+    }
+  }
+  
+  &.nivel-medio {
+    border-color: #ff9800;
+    
+    .card-header .nivel-badge {
+      background: rgba(255, 152, 0, 0.1);
+      color: #e65100;
+    }
+  }
+  
+  &.nivel-alto {
+    border-color: #f44336;
+    
+    .card-header .nivel-badge {
+      background: rgba(244, 67, 54, 0.1);
+      color: #c62828;
+    }
+  }
+  
+  &.nivel-critico {
+    border-color: #d32f2f;
+    border-width: 3px;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+    
+    .card-header .nivel-badge {
+      background: rgba(211, 47, 47, 0.15);
+      color: #b71c1c;
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes pulseAlert {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,107 @@
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+
+  .sidebar-left {
+    flex: 0 0 20%;
+    min-width: 300px;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    border-right: 1px solid rgba(33, 150, 243, 0.2);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+  }
+
+  .map-central {
+    flex: 1;
+    background: #87ceeb;
+    position: relative;
+    overflow: hidden;
+    border-left: 1px solid rgba(33, 150, 243, 0.2);
+    border-right: 1px solid rgba(33, 150, 243, 0.2);
+  }
+
+  .sidebar-right {
+    flex: 0 0 20%;
+    min-width: 300px;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    border-left: 1px solid rgba(33, 150, 243, 0.2);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Responsive design para pantallas más pequeñas */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    .sidebar-left,
+    .sidebar-right {
+      flex: 0 0 25%;
+      min-width: 250px;
+    }
+
+    .map-central {
+      flex: 1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+
+    .sidebar-left,
+    .sidebar-right {
+      flex: none;
+      width: 100%;
+      max-width: none;
+      height: auto;
+      min-height: 300px;
+    }
+
+    .map-central {
+      flex: none;
+      height: 50vh;
+      min-height: 400px;
+    }
+  }
+}
+
+/* Animaciones suaves */
+.sidebar-left,
+.sidebar-right,
+.map-central {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Scrollbar personalizado para las barras laterales */
+.sidebar-left::-webkit-scrollbar,
+.sidebar-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-left::-webkit-scrollbar-track,
+.sidebar-right::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.sidebar-left::-webkit-scrollbar-thumb,
+.sidebar-right::-webkit-scrollbar-thumb {
+  background: rgba(33, 150, 243, 0.5);
+  border-radius: 3px;
+}
+
+.sidebar-left::-webkit-scrollbar-thumb:hover,
+.sidebar-right::-webkit-scrollbar-thumb:hover {
+  background: rgba(33, 150, 243, 0.7);
+}

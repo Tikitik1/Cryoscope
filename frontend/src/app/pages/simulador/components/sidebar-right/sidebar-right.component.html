@@ -1,0 +1,293 @@
+<div class="sidebar-right-container">
+  <!-- Control de capas -->
+  <div class="control-capas-section">
+    <h3>Control de Capas</h3>
+    
+    <div class="layer-controls">
+      <div class="layer-item" 
+           [class.active]="capaTemperaturaActiva"
+           (click)="toggleTemperatura()">
+        <div class="layer-indicator temperatura"></div>
+        <span class="layer-name">Temperatura</span>
+        <div class="layer-toggle">
+          <input type="checkbox" 
+                 [checked]="capaTemperaturaActiva" 
+                 (change)="toggleTemperatura()">
+        </div>
+      </div>
+
+      <div class="layer-item" 
+           [class.active]="capaIcebergsActiva"
+           (click)="toggleIcebergs()">
+        <div class="layer-indicator icebergs"></div>
+        <span class="layer-name">Icebergs</span>
+        <div class="layer-toggle">
+          <input type="checkbox" 
+                 [checked]="capaIcebergsActiva" 
+                 (change)="toggleIcebergs()">
+        </div>
+      </div>
+
+      <div class="layer-item" 
+           [class.active]="capaPinturasRupestresActiva"
+           (click)="togglePinturasRupestres()">
+        <div class="layer-indicator pinturas-rupestres"></div>
+        <span class="layer-name">Pinturas Rupestres</span>
+        <div class="layer-toggle">
+          <input type="checkbox" 
+                 [checked]="capaPinturasRupestresActiva" 
+                 (change)="togglePinturasRupestres()">
+        </div>
+      </div>
+
+      <div class="layer-item" 
+           [class.active]="capaDEMActiva"
+           (click)="toggleDEM()">
+        <div class="layer-indicator dem"></div>
+        <span class="layer-name">DEM (Elevación)</span>
+        <div class="layer-toggle">
+          <input type="checkbox" 
+                 [checked]="capaDEMActiva" 
+                 (change)="toggleDEM()">
+        </div>
+      </div>      <div class="layer-item" 
+           [class.active]="capaClimaActiva"
+           (click)="toggleClima()">
+        <div class="layer-indicator clima"></div>
+        <span class="layer-name">Clima Complementario</span>
+        <div class="layer-toggle">
+          <input type="checkbox" 
+                 [checked]="capaClimaActiva" 
+                 (change)="toggleClima()">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Lista de icebergs -->
+  <div class="informacion-section">
+    <h3>Información</h3>
+    
+    <!-- Información de temperatura -->
+    <div *ngIf="informacionTemperatura" class="info-panel temperatura-info">
+      <div class="info-header">
+        <h4>🌡️ {{ informacionTemperatura.nombre }}</h4>
+        <button class="close-btn" (click)="cerrarInformacion()">&times;</button>
+      </div>
+      
+      <div class="info-content">        <div class="temp-timeline">
+          <div class="temp-period">
+            <span class="period-label">Pasada (2020)</span>
+            <span class="temp-value past">{{ informacionTemperatura.temperaturaPasada }}°C</span>
+          </div>
+          <div class="temp-period">
+            <span class="period-label">Actual (OpenMeteo)</span>
+            <span class="temp-value current">{{ informacionTemperatura.temperaturaActual }}°C</span>
+          </div>
+          <div class="temp-period">
+            <span class="period-label">Futura (2050)</span>
+            <span class="temp-value future">{{ informacionTemperatura.temperaturaFutura }}°C</span>
+          </div>
+          <div class="temp-delta">
+            <span class="delta-label">Cambio esperado:</span>
+            <span class="delta-value" [class.positive]="informacionTemperatura.delta > 0" [class.negative]="informacionTemperatura.delta < 0">
+              {{ informacionTemperatura.delta > 0 ? '+' : '' }}{{ informacionTemperatura.delta }}°C
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>    <!-- Información de glaciar -->    <div *ngIf="informacionGlaciar" class="info-panel glaciar-info">
+      <div class="info-header">
+        <h4>🏔️ {{ informacionGlaciar.nombre }}</h4>
+        <button class="close-btn" (click)="cerrarInformacion()">&times;</button>
+      </div>
+      
+      <div class="info-content">
+        <div class="glaciar-details">          <!-- Información básica -->
+          <div class="detail-section">
+            <h5>📋 Información General</h5>
+            <div class="detail-row" *ngIf="informacionGlaciar.id">
+              <span class="detail-label">ID:</span>
+              <span class="detail-value">{{ informacionGlaciar.id }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Tipo:</span>
+              <span class="detail-value">{{ informacionGlaciar.tipo }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Clasificación:</span>
+              <span class="detail-value">{{ informacionGlaciar.clasificacion }}</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.frente_termina_en && informacionGlaciar.frente_termina_en !== 'No especificado'">
+              <span class="detail-label">Termina en:</span>
+              <span class="detail-value highlight">{{ informacionGlaciar.frente_termina_en }}</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.orientacion && informacionGlaciar.orientacion !== 'N/A'">
+              <span class="detail-label">Orientación:</span>
+              <span class="detail-value">{{ informacionGlaciar.orientacion }}</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.region">
+              <span class="detail-label">Región:</span>
+              <span class="detail-value">{{ informacionGlaciar.region }}</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.comuna && informacionGlaciar.comuna !== 'No especificada'">
+              <span class="detail-label">Comuna:</span>
+              <span class="detail-value">{{ informacionGlaciar.comuna }}</span>
+            </div>
+          </div>
+
+          <!-- Información geométrica -->
+          <div class="detail-section">
+            <h5>📐 Dimensiones</h5>
+            <div class="detail-row" *ngIf="informacionGlaciar.area_km2 && informacionGlaciar.area_km2 > 0">
+              <span class="detail-label">Área:</span>
+              <span class="detail-value highlight">{{ informacionGlaciar.area_km2 }} km²</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.volumen_estimado_km3 && informacionGlaciar.volumen_estimado_km3 > 0">
+              <span class="detail-label">Volumen:</span>
+              <span class="detail-value highlight">{{ informacionGlaciar.volumen_estimado_km3 }} km³</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.pendiente_grados">
+              <span class="detail-label">Pendiente:</span>
+              <span class="detail-value">{{ informacionGlaciar.pendiente_grados }}°</span>
+            </div>
+          </div>
+
+          <!-- Información de altitudes -->
+          <div class="detail-section" *ngIf="hasAltitudeData()">
+            <h5>⛰️ Altitudes</h5>
+            <div class="detail-row" *ngIf="informacionGlaciar.altura_media_m">
+              <span class="detail-label">Altura Media:</span>
+              <span class="detail-value">{{ informacionGlaciar.altura_media_m }} m</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.altura_maxima_m">
+              <span class="detail-label">Altura Máxima:</span>
+              <span class="detail-value">{{ informacionGlaciar.altura_maxima_m }} m</span>
+            </div>
+            <div class="detail-row" *ngIf="informacionGlaciar.altura_minima_m">
+              <span class="detail-label">Altura Mínima:</span>
+              <span class="detail-value">{{ informacionGlaciar.altura_minima_m }} m</span>
+            </div>
+          </div><!-- Información de ubicación -->
+          <div class="detail-section">
+            <h5>📍 Ubicación</h5>
+            <div class="detail-row">
+              <span class="detail-label">Coordenadas:</span>
+              <span class="detail-value">{{ informacionGlaciar.coordenadas_formatted }}</span>
+            </div>
+          </div>
+
+          <!-- Timestamp si existe -->
+          <div class="detail-section" *ngIf="informacionGlaciar.timestamp">
+            <div class="detail-row timestamp">
+              <span class="detail-label">Última actualización:</span>
+              <span class="detail-value">{{ informacionGlaciar.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de pintura rupestre -->
+    <div *ngIf="informacionPinturaRupestre" class="info-panel pintura-rupestre-info">
+      <div class="info-header">
+        <h4>🎨 {{ informacionPinturaRupestre.nombre }}</h4>
+        <button class="close-btn" (click)="cerrarInformacion()">&times;</button>
+      </div>
+      
+      <div class="info-content">
+        <div class="pintura-details">
+          <!-- Información básica -->
+          <div class="detail-section">
+            <h5>🏛️ Información General</h5>
+            <div class="detail-row">
+              <span class="detail-label">Tipo:</span>
+              <span class="detail-value">{{ informacionPinturaRupestre.tipo_sitio }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Patrimonio:</span>
+              <span class="detail-value highlight">{{ informacionPinturaRupestre.patrimonio }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Región:</span>
+              <span class="detail-value">{{ informacionPinturaRupestre.region }}</span>
+            </div>
+          </div>
+
+          <!-- Información de ubicación -->
+          <div class="detail-section">
+            <h5>📍 Ubicación</h5>
+            <div class="detail-row">
+              <span class="detail-label">Coordenadas:</span>
+              <span class="detail-value">{{ informacionPinturaRupestre.coordenadas_formatted }}</span>
+            </div>
+          </div>
+
+          <!-- Timestamp -->
+          <div class="detail-section">
+            <div class="detail-row timestamp">
+              <span class="detail-label">Última actualización:</span>
+              <span class="detail-value">{{ informacionPinturaRupestre.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </div>      </div>
+    </div>    <!-- Información de clima -->
+    <div *ngIf="informacionClima" class="info-panel clima-info">
+      <div class="info-header">
+        <h4>🌤️ {{ informacionClima.comuna }}</h4>
+        <button class="close-btn" (click)="cerrarInformacion()">&times;</button>
+      </div>
+      
+      <div class="info-content">
+        <div class="clima-details">
+          <!-- Datos principales (más importantes) -->
+          <div class="detail-section destacado">
+            <h5>📊 Datos Climáticos Principales</h5>
+            <div class="detail-row principal">
+              <span class="detail-label">💧 Precipitación:</span>
+              <span class="detail-value destacado">{{ informacionClima.precipitacion.toFixed(1) }} mm</span>
+            </div>
+            <div class="detail-row principal">
+              <span class="detail-label">💨 Humedad:</span>
+              <span class="detail-value destacado">{{ informacionClima.humedad.toFixed(0) }}%</span>
+            </div>
+            <div class="detail-row principal">
+              <span class="detail-label">🌬️ Viento:</span>
+              <span class="detail-value destacado">{{ informacionClima.viento_velocidad.toFixed(1) }} km/h</span>
+            </div>
+            <div class="detail-row principal">
+              <span class="detail-label">🌡️ Sensación:</span>
+              <span class="detail-value destacado">{{ informacionClima.sensacion_termica.toFixed(1) }}°C</span>
+            </div>
+          </div>
+
+          <!-- Datos secundarios -->
+          <div class="detail-section">
+            <h5>📈 Información Adicional</h5>
+            <div class="detail-row">
+              <span class="detail-label">☁️ Nubosidad:</span>
+              <span class="detail-value">{{ informacionClima.nubosidad.toFixed(0) }}%</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">📊 Presión:</span>
+              <span class="detail-value">{{ informacionClima.presion.toFixed(1) }} hPa</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">🔆 Índice UV:</span>
+              <span class="detail-value highlight">{{ informacionClima.uv.toFixed(1) }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">🌫️ Visibilidad:</span>
+              <span class="detail-value">{{ (informacionClima.visibilidad / 1000).toFixed(1) }} km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado vacío -->
+    <div *ngIf="!informacionTemperatura && !informacionGlaciar && !informacionPinturaRupestre && !informacionClima" class="empty-info">
+      <div class="empty-icon">ℹ️</div>
+      <p>Haz clic en una comuna, glaciar, pintura rupestre o punto climático para ver información detallada.</p>
+    </div>
+  </div>
+</div>

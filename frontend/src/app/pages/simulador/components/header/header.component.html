@@ -1,0 +1,15 @@
+<header class="header">
+  <nav>
+    <ul>
+      <li [class.active]="isActive('/simulador')">
+        <a routerLink="/simulador">Simulador</a>
+      </li>
+      <li [class.active]="isActive('/alerta')">
+        <a routerLink="/alerta">Alerta</a>
+      </li>
+      <li [class.active]="isActive('/atlas')">
+        <a routerLink="/atlas">Atlas</a>
+      </li>
+    </ul>
+  </nav>
+</header>

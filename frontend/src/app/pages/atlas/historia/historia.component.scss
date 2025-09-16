@@ -1,0 +1,81 @@
+.historia-text, .cosmovision-text, .pueblos-text, .metodos-text {
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #3a1c71;
+    text-align: center;
+  }
+  p {
+    font-size: 1.13rem;
+    color: #2d225a;
+    margin-bottom: 1.1rem;
+    line-height: 1.6;
+    text-align: justify;
+  }
+
+  .question-block {
+    background: #f7f3ff;
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem 1.2rem 1.2rem;
+    margin-bottom: 1.3rem;
+    box-shadow: 0 2px 8px rgba(58,28,113,0.07);
+    border: 1.5px solid #c7b6e5;
+  }
+  .question-title {
+    font-weight: 600;
+    color: #3a1c71;
+    margin-bottom: 0.7rem;
+    font-size: 1.08rem;
+  }
+  .question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.7rem;
+    label {
+      font-size: 1rem;
+      color: #2d225a;
+      cursor: pointer;
+      input[type="radio"] {
+        accent-color: #a259e6;
+        margin-right: 0.5em;
+      }
+    }
+  }
+  .question-feedback {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    &.correct {
+      color: #3bb273;
+    }
+    &.incorrect {
+      color: #e14b4b;
+    }
+  }
+  .book-next-btn {
+    background: linear-gradient(90deg, #a259e6 0%, #3a1c71 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.08rem;
+    font-family: 'Georgia', serif;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.1rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(58,28,113,0.08);
+    transition: background 0.2s, transform 0.2s;
+    outline: none;
+  }
+  .book-next-btn:hover, .book-next-btn:focus {
+    background: linear-gradient(90deg, #3a1c71 0%, #a259e6 100%);
+    transform: translateY(-2px) scale(1.03);
+  }
+  .book-next-btn.small {
+    font-size: 0.98rem;
+    padding: 0.3rem 1.1rem;
+    margin-top: 0.2rem;
+  }
+}

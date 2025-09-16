@@ -1,0 +1,25 @@
+<div class="cosmovision-text">
+  <h1>Cosmovisión</h1>
+  <ng-container *ngIf="!showQuestions">
+    <ng-container *ngFor="let paragraph of cosmovisionText.split('\n\n')">
+      <p>{{ paragraph }}</p>
+    </ng-container>
+    <button class="book-next-btn" (click)="showQuestions = true">Ir a las preguntas</button>
+  </ng-container>
+  <ng-container *ngIf="showQuestions">
+    <h2>Responde sobre la cosmovisión</h2>
+    <form *ngFor="let q of preguntas; let i = index" class="question-block">
+      <div class="question-title">{{q.texto}}</div>
+      <div class="question-options">
+        <label *ngFor="let opt of q.opciones">
+          <input type="radio" name="q{{i}}" [value]="opt" [(ngModel)]="q.seleccionada" [disabled]="q.respondida" />
+          {{opt}}
+        </label>
+      </div>
+      <div *ngIf="q.respondida" class="question-feedback" [ngClass]="{'correct': q.seleccionada === q.respuesta, 'incorrect': q.seleccionada !== q.respuesta}">
+        {{ q.seleccionada === q.respuesta ? '¡Correcto!' : 'Incorrecto' }}
+      </div>
+      <button *ngIf="!q.respondida" type="button" class="book-next-btn small" (click)="responderPregunta(q)">Responder</button>
+    </form>
+  </ng-container>
+</div>

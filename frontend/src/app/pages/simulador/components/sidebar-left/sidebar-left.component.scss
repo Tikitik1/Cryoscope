@@ -1,0 +1,186 @@
+.sidebar-left-container {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  h3, h4 {
+    color: #1565c0;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 1.4em;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 8px;
+  }
+
+  h4 {
+    font-size: 1.2em;
+    margin-top: 25px;
+  }
+
+  // Contenido principal cuando hay glaciar seleccionado
+  .glaciar-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    height: auto;
+  }
+
+  // Sección del visor Cesium 3D
+  .cesium-section {
+    height: 350px;
+    min-height: 350px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 2px solid #e3f2fd;
+    flex-shrink: 0;
+    
+    app-cesium-viewer {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // Sección del simulador
+  .simulador-section {
+    flex: none;
+    min-height: auto;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 2px solid #e3f2fd;
+    overflow: hidden;
+    
+    app-simulador-deshielo {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // Mensaje cuando no hay glaciar seleccionado
+  .no-glaciar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 20px;
+    
+    .placeholder {
+      text-align: center;
+      color: #6c757d;
+      background: rgba(240, 248, 255, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #e3f2fd;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);      
+      h4 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1565c0;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #6c757d;
+      }
+    }
+  }
+}
+
+/* Estilos adicionales para compatibilidad con el diseño general */
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 2px solid #e3f2fd;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    border-color: #2196f3;
+    transform: translateY(-2px);
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  
+  h3, h4 {
+    margin: 0;
+    color: #1565c0;
+    font-weight: 600;
+  }
+  
+  .icon {
+    font-size: 1.5em;
+  }
+}
+
+/* Animaciones y transiciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glaciar-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.cesium-section, .simulador-section {
+  animation: fadeIn 0.6s ease-out;
+}
+
+// Scroll personalizado para toda la barra lateral
+.sidebar-left-container {
+  // Comportamiento del scroll
+  scroll-behavior: smooth;
+  
+  // Estilos del scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(33, 150, 243, 0.6);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: rgba(33, 150, 243, 0.8);
+    }
+    
+    &:active {
+      background: rgba(33, 150, 243, 1);
+    }
+  }
+}

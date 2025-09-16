@@ -1,0 +1,71 @@
+<div class="layout-container">
+  <!-- Barra lateral con contenido y scroll independiente -->
+  <aside class="sidebar">
+    <div class="sidebar-content">
+      <!-- Explicación del sistema -->
+      <div class="section explicacion">
+        <h2>Sistema de Monitoreo Glaciar Aysén</h2>
+        <p>
+          Monitoreo automático en tiempo real de condiciones meteorológicas mediante OpenMeteo API. 
+          Las cuadrículas del mapa muestran datos reales de temperatura, viento y precipitación 
+          de la Región de Aysén para el monitoreo de glaciares.
+        </p>
+        <p class="objetivo">
+          <strong>Objetivo:</strong> Detectar cambios climáticos que puedan afectar la conservación 
+          de los glaciares patagónicos y generar alertas tempranas.
+        </p>
+      </div>
+      
+      <!-- Sistema de reportes ciudadanos -->
+      <div class="section reportes">
+        <h3>Reportar Observación Glaciar</h3>
+        <button class="btn-abrir-formulario" (click)="mostrandoFormulario = !mostrandoFormulario">
+          {{ mostrandoFormulario ? 'Cerrar formulario' : 'Nuevo reporte ciudadano' }}
+        </button>
+        <div *ngIf="mostrandoFormulario">
+          <app-reportes></app-reportes>
+        </div>
+      </div>
+      
+      <!-- Pronóstico de riesgo -->
+      <div class="section pronostico">
+        <app-pronostico-riesgo></app-pronostico-riesgo>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Zona del mapa y componentes en barra scrolleable -->
+  <main class="map-container-scroll">
+    <div class="map-content-scroll">
+      <app-mapa-aysen (alertaSeleccionada)="alertaSeleccionada = $event"></app-mapa-aysen>
+      <div class="info-alerta-section">
+        <div class="estado-monitoreo">
+          <h3>Estado del Monitoreo</h3>
+          <div class="estado-info">
+            <div class="estado-header">
+              <i class="fas fa-satellite-dish"></i>
+              <span class="estado-texto">Monitoreo Automático Activo</span>
+            </div>
+            <p>Sistema monitoreando <strong>30 cuadrículas meteorológicas</strong> en la Región de Aysén.</p>
+            <p>Actualización cada <strong>15 minutos</strong> desde OpenMeteo API.</p>
+            <div class="estadisticas">
+              <div class="stat-item">
+                <span class="numero">30</span>
+                <span class="label">Cuadrículas</span>
+              </div>
+              <div class="stat-item">
+                <span class="numero">15min</span>
+                <span class="label">Actualización</span>
+              </div>
+              <div class="stat-item">
+                <span class="numero">24/7</span>
+                <span class="label">Monitoreo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-info-alertas [alerta]="alertaSeleccionada"></app-info-alertas>
+      </div>
+    </div>
+  </main>
+</div>

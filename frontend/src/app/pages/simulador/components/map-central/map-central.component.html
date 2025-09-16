@@ -1,0 +1,144 @@
+<div class="map-central-container">
+  <!-- Encabezado con información climática -->
+  <div class="climate-header" *ngIf="datosClimaticos && !cargandoDatos">
+    <div class="climate-item temperature">
+      <div class="climate-icon">🌡️</div>
+      <div class="climate-data">
+        <span class="climate-label">Temperatura Actual</span>
+        <span class="climate-value" [style.color]="getTemperatureColor(datosClimaticos.temperatura.actual)">
+          {{ datosClimaticos.temperatura.actual }}°C
+        </span>
+      </div>
+    </div>
+
+    <div class="climate-item delta">
+      <div class="climate-icon">📈</div>
+      <div class="climate-data">
+        <span class="climate-label">Delta Térmica</span>
+        <span class="climate-value delta-value">
+          +{{ datosClimaticos.temperatura.delta }}°C
+        </span>
+      </div>
+    </div>
+
+    <div class="climate-item wind">
+      <div class="climate-icon">💨</div>
+      <div class="climate-data">
+        <span class="climate-label">Viento</span>
+        <span class="climate-value">
+          {{ datosClimaticos.viento.velocidad }} km/h {{ getWindDirection(datosClimaticos.viento.direccion) }}
+        </span>
+      </div>
+    </div>
+
+    <div class="climate-item humidity">
+      <div class="climate-icon">💧</div>
+      <div class="climate-data">
+        <span class="climate-label">Humedad</span>
+        <span class="climate-value">{{ datosClimaticos.humedad }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargandoDatos" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Cargando datos climáticos y glaciares...</p>
+  </div>
+
+  <!-- Estado de error -->
+  <div *ngIf="errorCarga && !cargandoDatos" class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h3>Error de carga</h3>
+    <p>{{ errorCarga }}</p>
+    <button class="reload-btn" (click)="recargarDatos()">
+      🔄 Reintentar
+    </button>
+  </div>
+  <!-- Contenedor principal del mapa -->
+  <div class="map-container">
+    <!-- Overlay de carga sobre el mapa -->
+    <div *ngIf="cargandoDatos" class="map-loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Cargando datos del mapa...</p>
+    </div>
+
+    <!-- Overlay de error sobre el mapa -->
+    <div *ngIf="errorCarga && !cargandoDatos" class="map-error-overlay">
+      <div class="error-icon">❌</div>
+      <h3>Error al cargar datos</h3>      <p>{{ errorCarga }}</p>
+      <button class="reload-btn" (click)="recargarDatos()">
+        🔄 Reintentar
+      </button>
+    </div>
+
+    <!-- Contenedor del mapa - SIEMPRE presente en el DOM -->
+    <div #mapContainer id="main-map-container" class="main-map"></div>
+    
+    <!-- Overlay con información de temperatura -->
+    <div class="temperature-info-overlay">
+      <div class="temp-comparison" *ngIf="datosClimaticos">
+        <h4>Comparación Térmica</h4>
+        <div class="temp-bars">
+          <div class="temp-bar">
+            <span class="temp-label">Pasada</span>
+            <div class="temp-value past">{{ datosClimaticos.temperatura.pasada }}°C</div>
+            <div class="temp-visual" [style.height.%]="(datosClimaticos.temperatura.pasada + 10) * 5"></div>
+          </div>
+          <div class="temp-bar">
+            <span class="temp-label">Actual</span>
+            <div class="temp-value current">{{ datosClimaticos.temperatura.actual }}°C</div>
+            <div class="temp-visual current" [style.height.%]="(datosClimaticos.temperatura.actual + 10) * 5"></div>
+          </div>
+          <div class="temp-bar">
+            <span class="temp-label">Futura</span>
+            <div class="temp-value future">{{ datosClimaticos.temperatura.futura }}°C</div>
+            <div class="temp-visual future" [style.height.%]="(datosClimaticos.temperatura.futura + 10) * 5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de glaciares -->
+    <div class="glaciers-info-overlay">
+      <h4>Glaciares Monitoreados</h4>
+      <div class="glacier-count">
+        <span class="count-number">{{ glaciares.length }}</span>
+        <span class="count-label">glaciares activos</span>
+      </div>
+      <div class="glacier-stats" *ngIf="glaciares.length > 0">
+        <div class="stat-item">
+          <span class="stat-label">Área total:</span>
+          <span class="stat-value">{{ getAreaTotal().toFixed(1) }} km²</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Volumen est.:</span>
+          <span class="stat-value">{{ getVolumenTotal().toFixed(1) }} km³</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leyenda del mapa -->
+  <div class="map-legend" *ngIf="!cargandoDatos && !errorCarga">
+    <h5>Leyenda</h5>
+    <div class="legend-items">
+      <div class="legend-item">
+        <span class="legend-symbol glacier">🏔️</span>
+        <span class="legend-text">Glaciares</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol temperature">🌡️</span>
+        <span class="legend-text">Estaciones climáticas</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol water">💧</span>
+        <span class="legend-text">Cuerpos de agua</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol risk">⚠️</span>
+        <span class="legend-text">Zonas de riesgo</span>
+      </div>
+    </div>
+  </div>
+</div>

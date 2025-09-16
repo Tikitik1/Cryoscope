@@ -1,0 +1,86 @@
+/* Estilos para el componente subir mensajes */
+.subir-mensajes-container {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+}
+
+.header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e3f2fd;
+}
+
+.header h3 {
+  color: #1565c0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contenido-preparacion {
+  text-align: center;
+}
+
+.mensaje-desarrollo {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #e3f2fd;
+}
+
+.mensaje-desarrollo i {
+  font-size: 2rem;
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+.mensaje-desarrollo h4 {
+  color: #1565c0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.mensaje-desarrollo p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.caracteristicas-futuras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.caracteristica {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #555;
+  border: 1px solid #e3f2fd;
+}
+
+.caracteristica i {
+  color: #1976d2;
+  font-size: 1rem;
+}
+
+.estado-desarrollo {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #e3f2fd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #1565c0;
+}

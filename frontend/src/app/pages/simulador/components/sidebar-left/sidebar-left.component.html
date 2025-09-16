@@ -1,0 +1,31 @@
+<div class="sidebar-left-container">
+  
+  <!-- Contenido cuando hay un glaciar seleccionado -->
+  <div class="glaciar-content" *ngIf="glaciarSeleccionado">
+      <!-- Vista 3D del Glaciar (Cesium) - Siempre visible cuando hay glaciar seleccionado -->
+    <div class="cesium-section">
+      <app-cesium-viewer 
+        [glaciarData]="glaciarSeleccionado"
+        [isVisible]="true">
+      </app-cesium-viewer>
+    </div>
+
+    <!-- Simulador de Deshielo -->
+    <div class="simulador-section">
+      <app-simulador-deshielo 
+        [glaciarSeleccionado]="glaciarSeleccionado"
+        [visible]="true">
+      </app-simulador-deshielo>
+    </div>
+    
+  </div>
+  
+  <!-- Mensaje cuando no hay glaciar seleccionado -->
+  <div class="no-glaciar" *ngIf="!glaciarSeleccionado">
+    <div class="placeholder">
+      <h4>🏔️ Selecciona un glaciar</h4>
+      <p>Haz clic en un glaciar en el mapa para ver su información, vista 3D y simulación de deshielo.</p>
+    </div>
+  </div>
+  
+</div>

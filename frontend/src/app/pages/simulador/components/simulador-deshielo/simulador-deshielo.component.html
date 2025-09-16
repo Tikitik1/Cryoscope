@@ -1,0 +1,339 @@
+<div class="simulador-deshielo" [class.visible]="visible">
+  <div class="simulador-header">
+    <h3>🧊 Simulador de Deshielo</h3>
+  </div>
+
+  <div class="simulador-content" *ngIf="glaciarSeleccionado">
+    
+    <!-- Indicador de carga -->
+    <div class="loading-indicator" *ngIf="cargandoDatos && !datosListos">
+      <div class="loading-spinner"></div>
+      <p>🔄 Cargando datos climáticos y de temperatura...</p>
+      <small>Esto puede tomar unos segundos...</small>
+    </div>
+    
+    <!-- Estado intermedio - evitar mostrar datos incorrectos -->
+    <div class="loading-placeholder" *ngIf="!cargandoDatos && !datosListos">
+      <div class="loading-spinner"></div>
+      <p>⏳ Procesando datos...</p>
+    </div>
+
+    <!-- Contenido principal (solo visible cuando los datos están completamente listos) -->
+    <div class="contenido-principal" *ngIf="datosListos && !cargandoDatos">
+      
+      <!-- Información del glaciar seleccionado -->
+      <div class="glaciar-info">
+        <h4>📍 {{ glaciarSeleccionado.nombre }}</h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Tipo:</span>
+            <span class="value">{{ glaciarSeleccionado.tipo }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Volumen:</span>
+            <span class="value">{{ glaciarSeleccionado.volumen.toFixed(2) }} km³</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Área:</span>
+            <span class="value">{{ (glaciarSeleccionado.area / 1000000).toFixed(2) }} km²</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parámetros de simulación -->
+      <div class="parametros-simulacion">
+        <h5>⚙️ Parámetros de Simulación</h5>
+        
+        <!-- Selector de año proyectado -->
+        <div class="input-group">
+          <label for="ano-proyectado">📅 Año proyectado:</label>
+          <select 
+            id="ano-proyectado"
+            [(ngModel)]="datosSimulacion.anoProyectado"
+            (change)="onSelectAnoChange($event)"
+            class="form-input"
+            [class.modified]="datosSimulacion.anoProyectado === 'no-especificado'">
+            <option value="no-especificado" *ngIf="datosSimulacion.anoProyectado === 'no-especificado'">
+              Año no especificado
+            </option>
+            <option *ngFor="let ano of anosDisponibles" [value]="ano">
+              {{ ano }}
+            </option>
+          </select>
+          <span class="unit" *ngIf="datosModificadosManualmente.size > 0">⚠️</span>
+        </div>
+
+        <!-- Temperatura base (solo lectura) -->
+        <div class="input-group">
+          <label for="temp-base">🌡️ Temperatura base del glaciar:</label>
+          <input 
+            id="temp-base"
+            type="number" 
+            [(ngModel)]="datosSimulacion.temperaturaBase"
+            readonly
+            class="form-input readonly"
+            step="0.1">
+          <span class="unit">°C</span>
+        </div>
+
+        <!-- DDF -->
+        <div class="input-group">
+          <label for="ddf">❄️ DDF (Grado-Día de Fusión):</label>
+          <input 
+            id="ddf"
+            type="number" 
+            [(ngModel)]="datosSimulacion.ddf"
+            (input)="onDDFChange($event)"
+            step="0.1"
+            min="1"
+            max="15"
+            class="form-input"
+            [class.modified]="esParametroModificado('ddf')">
+          <span class="unit">mm/°C·día</span>
+          <small class="help-text">Varía con el año proyectado - hielo más débil en futuro</small>
+        </div>
+
+        <!-- Aumento de temperatura (del delta de temperatura) -->
+        <div class="input-group">
+          <label for="aumento-temp">🔺 Aumento de temperatura (proyectado):</label>
+          <input 
+            id="aumento-temp"
+            type="number" 
+            [(ngModel)]="datosSimulacion.aumentoTemperatura"
+            (input)="onAumentoTempChange($event)"
+            step="0.1"
+            min="0"
+            max="10"
+            class="form-input"
+            [class.modified]="esParametroModificado('aumentoTemperatura')">
+          <span class="unit">°C</span>
+          <small class="help-text">Basado en proyecciones climáticas</small>
+        </div>
+
+        <!-- Radiación solar -->
+        <div class="input-group">
+          <label for="radiacion">☀️ Radiación solar:</label>
+          <input 
+            id="radiacion"
+            type="number" 
+            [(ngModel)]="datosSimulacion.radiacionSolar"
+            (input)="onRadiacionChange($event)"
+            min="0"
+            max="100"
+            class="form-input"
+            [class.error]="errores['radiacion']"
+            [class.modified]="esParametroModificado('radiacionSolar')">
+          <span class="unit">%</span>
+          <small class="help-text">Aumenta con años futuros - menos nubes, más radiación</small>
+          <div class="error-message" *ngIf="errores['radiacion']">
+            {{ errores['radiacion'] }}
+          </div>
+        </div>
+
+        <!-- Precipitación -->
+        <div class="input-group">
+          <label for="precipitacion">🌧️ Precipitación anual:</label>
+          <input 
+            id="precipitacion"
+            type="number" 
+            [(ngModel)]="datosSimulacion.precipitacion"
+            (input)="onPrecipitacionChange($event)"
+            min="0"
+            max="5000"
+            class="form-input"
+            [class.modified]="esParametroModificado('precipitacion')">
+          <span class="unit">mm</span>
+          <small class="help-text">Disminuye con años futuros - cambio climático reduce lluvias</small>
+        </div>
+
+        <!-- Humedad relativa -->
+        <div class="input-group">
+          <label for="humedad">💧 Humedad relativa:</label>
+          <input 
+            id="humedad"
+            type="number" 
+            [(ngModel)]="datosSimulacion.humedad"
+            (input)="onHumedadChange($event)"
+            min="0"
+            max="100"
+            class="form-input"
+            [class.modified]="esParametroModificado('humedad')">
+          <span class="unit">%</span>
+          <small class="help-text">Varía con años futuros - cambios en patrones atmosféricos</small>
+        </div>
+
+        <!-- Factor climático -->
+        <div class="input-group">
+          <label for="clima">🌦️ Clima esperado (factor de ajuste):</label>
+          <input 
+            id="clima"
+            type="number" 
+            [(ngModel)]="datosSimulacion.climaEsperado"
+            (input)="onClimaEsperadoChange($event)"
+            step="0.1"
+            min="0.5"
+            class="form-input"
+            [class.error]="errores['clima']"
+            [class.modified]="esParametroModificado('climaEsperado')">
+          <small class="help-text">Rango científico: 0.5-5.0 (basado en estudios del IPCC)</small>
+          <div class="error-message" *ngIf="errores['clima']">
+            {{ errores['clima'] }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="acciones">
+        <button class="btn-simular" (click)="simular()">
+          🚀 Simular Deshielo
+        </button>
+        <button class="btn-reset" (click)="resetearParametros()" *ngIf="datosModificadosManualmente.size > 0">
+          🔄 Resetear Parámetros
+        </button>
+      </div>
+
+      <!-- Resultados de la simulación -->
+      <div class="resultados" *ngIf="resultado">
+        <h5>📊 Resultados de la Simulación</h5>
+        <div class="resultado-principal" [class.critico]="resultado.derretidoCompleto">
+          <!-- SIEMPRE mostrar volumen perdido -->
+          <div class="resultado-item">
+            <span class="label">💧 Volumen perdido:</span>
+            <span class="value">{{ resultado.volumenPerdido >= 0.01 ? resultado.volumenPerdido.toFixed(3) : resultado.volumenPerdido.toFixed(6) }} km³</span>
+          </div>
+          
+          <!-- SIEMPRE mostrar nuevo volumen -->
+          <div class="resultado-item">
+            <span class="label">🧊 Nuevo volumen:</span>
+            <span class="value">{{ resultado.nuevoVolumen >= 0.01 ? resultado.nuevoVolumen.toFixed(3) : resultado.nuevoVolumen.toFixed(6) }} km³</span>
+          </div>
+
+          <div class="resultado-critico" *ngIf="resultado.derretidoCompleto">
+            <h6>🚨 GLACIAR DERRETIDO COMPLETAMENTE</h6>
+            <p>El glaciar se derretiría por completo bajo las condiciones simuladas.</p>
+          </div>
+
+          <div class="resultado-item">
+            <span class="label">🌡️ Temperatura final:</span>
+            <span class="value">{{ resultado.temperaturaFinal.toFixed(1) }}°C</span>
+          </div>
+
+          <div class="resultado-item">
+            <span class="label">📈 Modificador climático:</span>
+            <span class="value">{{ resultado.modificador.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa de simulación -->
+      <div class="mapa-simulacion" *ngIf="simulacionRealizada">
+        <h5>🗺️ Visualización del Impacto</h5>
+        <div id="mapa-simulacion" class="mapa-container"></div>
+        <small class="mapa-help">El mapa muestra la forma real del glaciar y el área de impacto proyectada</small>
+      </div>      <!-- Análisis detallado de impactos -->
+      <div class="analisis-impactos" *ngIf="resultado && simulacionRealizada && tieneAnalisisImpacto">
+        <h5>📊 Análisis Detallado de Impactos</h5>
+        
+        <!-- Resumen visual de impactos con cuadrados de colores -->
+        <div class="impactos-grid">
+          
+          <!-- Impacto Cultural -->
+          <div class="impacto-card cultural" 
+               [class]="'nivel-' + (resultado.analisisImpacto?.impactoCultural?.nivel || 'bajo')" 
+               *ngIf="resultado.analisisImpacto?.impactoCultural">            <div class="card-header">
+              <div class="nivel-indicator" [class]="'nivel-' + (resultado.analisisImpacto?.impactoCultural?.nivel || 'bajo')"></div>
+              <span class="icon">🏛️</span>
+              <h6>Impacto Cultural</h6>
+              <span class="nivel-badge">{{ resultado.analisisImpacto?.impactoCultural?.nivel?.toUpperCase() || 'BAJO' }}</span>
+            </div>
+            <p>{{ resultado.analisisImpacto?.impactoCultural?.descripcion || 'Sin descripción disponible' }}</p>            <div class="detalles" *ngIf="resultado.analisisImpacto?.impactoCultural?.comunidadesIndigenas?.length">
+              <strong>Comunidades:</strong> {{ getComunidadesIndigenas().slice(0,2).join(', ') }}
+              <span *ngIf="getComunidadesIndigenas().length > 2">...</span>
+            </div>
+            <div class="detalles" *ngIf="resultado.analisisImpacto?.impactoCultural?.sitiosAfectados?.length">
+              <strong>Sitios afectados:</strong> {{ resultado.analisisImpacto?.impactoCultural?.sitiosAfectados?.length }} sitios
+            </div>          </div>
+          
+          <!-- Impacto Ambiental -->
+          <div class="impacto-card ambiental" 
+               [class]="'nivel-' + (resultado.analisisImpacto?.impactoAmbiental?.nivel || 'bajo')" 
+               *ngIf="resultado.analisisImpacto?.impactoAmbiental">
+            <div class="card-header">
+              <div class="nivel-indicator" [class]="'nivel-' + (resultado.analisisImpacto?.impactoAmbiental?.nivel || 'bajo')"></div>
+              <span class="icon">🌿</span>
+              <h6>Impacto Ambiental</h6>
+              <span class="nivel-badge">{{ resultado.analisisImpacto?.impactoAmbiental?.nivel?.toUpperCase() || 'BAJO' }}</span>
+            </div>
+            <p>{{ resultado.analisisImpacto?.impactoAmbiental?.descripcion || 'Sin descripción disponible' }}</p>
+            <div class="detalles">
+              <strong>Calidad del agua:</strong> {{ resultado.analisisImpacto?.impactoAmbiental?.calidadAgua || 'Sin datos' }}
+            </div>
+            <div class="detalles" *ngIf="resultado.analisisImpacto?.impactoAmbiental?.especiesEnRiesgo?.length">
+              <strong>Especies en riesgo:</strong> {{ getEspeciesEnRiesgo().slice(0,2).join(', ') }}
+              <span *ngIf="getEspeciesEnRiesgo().length > 2">...</span>
+            </div>
+          </div>
+          
+          <!-- Impacto Urbano -->
+          <div class="impacto-card urbano" 
+               [class]="'nivel-' + (resultado.analisisImpacto?.impactoUrbano?.nivel || 'bajo')" 
+               *ngIf="resultado.analisisImpacto?.impactoUrbano">
+            <div class="card-header">
+              <div class="nivel-indicator" [class]="'nivel-' + (resultado.analisisImpacto?.impactoUrbano?.nivel || 'bajo')"></div>
+              <span class="icon">🏙️</span>
+              <h6>Impacto Urbano</h6>
+              <span class="nivel-badge">{{ resultado.analisisImpacto?.impactoUrbano?.nivel?.toUpperCase() || 'BAJO' }}</span>
+            </div>
+            <p>{{ resultado.analisisImpacto?.impactoUrbano?.descripcion || 'Sin descripción disponible' }}</p>
+            <div class="detalles">
+              <strong>Población afectada:</strong> {{ (resultado.analisisImpacto?.impactoUrbano?.poblacionAfectada || 0) | number }} hab.
+            </div>
+            <div class="ciudades-cercanas" *ngIf="getCiudadesCercanas().length > 0">
+              <strong>Ciudades cercanas:</strong>
+              <div class="ciudad-mini" *ngFor="let ciudad of getCiudadesCercanas().slice(0,3)">
+                {{ ciudad?.nombre }} ({{ ciudad?.distancia?.toFixed(0) }}km, {{ ciudad?.poblacion | number }} hab.)
+              </div>
+            </div>
+          </div>        </div>
+
+        <!-- Recomendaciones generales -->
+        <div class="recomendaciones" *ngIf="getRecomendaciones().length > 0">
+          <h6>💡 Recomendaciones</h6>
+          <ul>
+            <li *ngFor="let recomendacion of getRecomendaciones().slice(0,5)">
+              {{ recomendacion }}
+            </li>          </ul>
+        </div>
+        
+        <!-- Información metodológica -->
+        <div class="metodologia-analisis">
+          <h6>🔬 Metodología del Análisis</h6>
+          <p>Análisis basado en:</p>
+          <ul>
+            <li><strong>Datos reales:</strong> Ciudades patagónicas con poblaciones exactas</li>
+            <li><strong>Geolocalización:</strong> Distancias calculadas por proximidad</li>
+            <li><strong>Contexto cultural:</strong> Comunidades indígenas históricas</li>
+            <li><strong>Biodiversidad:</strong> Especies emblemáticas (Huemul, Cóndor)</li>
+            <li><strong>Hidrología:</strong> Impacto en calidad del agua</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Texto explicativo técnico -->
+      <div class="explicacion-tecnica" *ngIf="simulacionRealizada">
+        <h5>📝 Metodología y Datos</h5>
+        <div class="texto-explicativo" [innerHTML]="explicacionSimulacion | nl2br"></div>
+      </div>
+
+    </div> <!-- fin contenido-principal -->
+
+  </div>
+
+  <!-- Estado cuando no hay glaciar seleccionado -->
+  <div class="sin-glaciar" *ngIf="!glaciarSeleccionado">
+    <div class="placeholder">
+      <h4>🏔️ Selecciona un glaciar</h4>
+      <p>Haz clic en un glaciar en el mapa principal para comenzar la simulación de deshielo.</p>
+    </div>
+  </div>
+</div>
